@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\EarthquakeProvider;
+use App\Integrations\Usgs\UsgsEarthquakeProvider;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            EarthquakeProvider::class,
+            UsgsEarthquakeProvider::class,
+        );
     }
 
     /**

@@ -28,6 +28,7 @@ export default defineConfig({
             },
         }),
         wayfinder({
+            command: './vendor/bin/sail artisan wayfinder:generate',
             formVariants: true,
         }),
     ],

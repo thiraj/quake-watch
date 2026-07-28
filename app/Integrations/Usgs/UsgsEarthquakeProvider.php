@@ -23,18 +23,17 @@ final class UsgsEarthquakeProvider implements EarthquakeProvider
      */
     public function search(EarthquakeSearchData $search): array
     {
-        return $this->cache->remember(
+        $features = $this->cache->remember(
             $this->cacheKey($search),
             now()->addMinutes(
                 config('earthquakes.providers.usgs.cache_ttl', 5)
             ),
             fn (): array => $this->fetch($search),
         );
+
+        return $this->mapFeatures($features);
     }
 
-    /**
-     * @return list<EarthquakeData>
-     */
     private function fetch(EarthquakeSearchData $search): array
     {
         $response = $this->http
@@ -61,6 +60,15 @@ final class UsgsEarthquakeProvider implements EarthquakeProvider
             );
         }
 
+        return $features;
+    }
+
+    /**
+     * @param  array<int, mixed>  $features
+     * @return list<EarthquakeData>
+     */
+    private function mapFeatures(array $features): array
+    {
         return array_values(
             array_filter(
                 array_map(

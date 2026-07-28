@@ -23,7 +23,7 @@ class EarthquakeController extends Controller
 
         $dashboard = $this->earthquakes->dashboard($search);
 
-        return Inertia::render('Earthquakes/Index', [
+        return Inertia::render('earthquakes/Index', [
             'earthquakes' => $dashboard->earthquakes,
             'summary' => [
                 'total' => $dashboard->total,

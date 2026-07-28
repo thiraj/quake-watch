@@ -3,7 +3,7 @@
 use App\Http\Controllers\EarthquakeController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'Welcome')->name('home');
+Route::redirect('/', '/earthquakes')->name('home');
 
 Route::get('earthquakes', [EarthquakeController::class, 'index'])->name('earthquakes.index');
 
